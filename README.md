@@ -15,3 +15,9 @@ Erstele eine Kopie von *.env.template* als *.env* und füge deinen OpenAI API Ke
 Da wir Streamlit nutzen, können wir nicht direkt den Python-Befehl nutzen. Statt dessen musst du folgendes Kommando ausführen:
 
 `streamlit run embeddings.py`
+
+### Starten der Anwendung in GitHub Codespaces
+Man muss dafür die Sicherheitsfunktionen CORS und XSRF-Protection ausschalten:
+`streamlit run embeddings.py --server.enableCORS false --server.enableXsrfProtection false`
+
+Zustäzlich muss im PORTS Tab der Port 8501 auf "Public" gestellt werden.

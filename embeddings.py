@@ -35,7 +35,9 @@ def erstelle_embeddings(textTeile):
 def suche(suchtext):
     ergebnisse = st.session_state.embeddings.similarity_search(suchtext)
 
-    st.write(ergebnisse)
+    for ergebnis in ergebnisse:
+        st.write(ergebnis.page_content)
+        st.divider()
 
 
 def run():
