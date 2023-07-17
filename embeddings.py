@@ -1,7 +1,7 @@
 import streamlit as st
 from dotenv import load_dotenv
 from PyPDF2 import PdfReader
-from langchain.text_splitter import CharacterTextSplitter
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 
@@ -20,7 +20,11 @@ def text_extrahieren(pdfDateien):
 
 
 def text_splitten(text):
-    splitter = CharacterTextSplitter(chunk_size=300, chunk_overlap=50, length_function=len)
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size = 500,
+        chunk_overlap  = 50,
+        length_function = len,
+    )
 
     return splitter.split_text(text)
 
@@ -51,7 +55,7 @@ def run():
 
         text_teile = text_splitten(text)
 
-        st.write(text_teile)
+        st.write("Gesamttext mit Länge von " + str(len(text)) + " wurde in " + str(len(text_teile)) + " Teile aufgeteilt")
 
         embeddings = erstelle_embeddings(text_teile)
 
