@@ -8,24 +8,24 @@ from langchain.vectorstores import FAISS
 def setup():
     load_dotenv()
 
-def textExtrahieren(pdfDateien):
-    gesamtText = ""
+def text_extrahieren(pdfDateien):
+    gesamt_text = ""
 
     for pdf in pdfDateien:
         reader = PdfReader(pdf)
         for page in reader.pages:
-            gesamtText += page.extract_text()
+            gesamt_text += page.extract_text()
     
-    return gesamtText
+    return gesamt_text
 
 
-def textSplitten(text):
+def text_splitten(text):
     splitter = CharacterTextSplitter(chunk_size=300, chunk_overlap=50, length_function=len)
 
     return splitter.split_text(text)
 
 
-def erstelleEmbeddings(textTeile):
+def erstelle_embeddings(textTeile):
     return FAISS.from_texts(texts=textTeile, embedding=OpenAIEmbeddings())
 
 def suche(suchtext):
@@ -44,14 +44,16 @@ def run():
 
     st.header("Embeddings aus deinen PDF-Dateien 📘")
 
-    pdfDateien = st.file_uploader("PDF-Dateien hochladen (anschließend klicke auf 'Erstelle Embeddings')",type="pdf", accept_multiple_files=True)
+    pdf_dateien = st.file_uploader("PDF-Dateien hochladen (anschließend klicke auf 'Erstelle Embeddings')",type="pdf", accept_multiple_files=True)
 
     if st.button("Erstelle Embeddings"):
-        text = textExtrahieren(pdfDateien)
+        text = text_extrahieren(pdf_dateien)
 
-        textTeile = textSplitten(text)
+        text_teile = text_splitten(text)
 
-        embeddings = erstelleEmbeddings(textTeile)
+        st.write(text_teile)
+
+        embeddings = erstelle_embeddings(text_teile)
 
         st.session_state.embeddings = embeddings
 
