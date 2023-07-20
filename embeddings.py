@@ -21,7 +21,7 @@ def text_extrahieren(pdfDateien):
 
 def text_splitten(text):
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size = 500,
+        chunk_size = 2000,
         chunk_overlap  = 50,
         length_function = len,
     )
